@@ -9,17 +9,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class SongAdder {
 
+    private final SongRepository songRepository;
+
     public SongAdder(final SongRepository songRepository) {
         this.songRepository = songRepository;
     }
 
-    private final SongRepository songRepository;
-
     public SongEntity addSong(SongEntity song) {
         log.info("Song added: " + song);
-        songRepository.saveToDatabase(song);
-
-        return song;
+        return songRepository.save(song);
     }
 
 
