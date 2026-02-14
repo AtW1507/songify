@@ -1,3 +1,12 @@
+
+CREATE TABLE IF NOt EXISTS song
+(
+    id BIGSERIAL PRIMARY KEY,
+    artist VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL
+);
+
+
 INSERT INTO song (id, artist, name) VALUES
                                         (nextval('song_id_seq'), 'Metallica', 'Enter Sandman'),
                                         (nextval('song_id_seq'), 'Metallica', 'Nothing Else Matters'),

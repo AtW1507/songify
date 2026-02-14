@@ -17,9 +17,13 @@ public class SongMapper {
         SongEntity song = new SongEntity(dto.songName(), dto.artist());
         return song;
     }
+    public static  SongDto mapFromSongToSongDto(SongEntity song) {
+        return new SongDto(song.getId(), song.getName(), song.getArtist());
+
+    }
     public static @NonNull CreateSongResponseDto mapFromSongToCreateSongResponseDto(SongEntity song) {
-        CreateSongResponseDto body = new CreateSongResponseDto(song);
-        return body;
+        SongDto songDto = SongMapper.mapFromSongToSongDto(song);
+        return new CreateSongResponseDto(songDto);
     }
     public static DeleteSongResponseDto mapFromSongToDeleteSongResponseDto(Long id) {
         return new DeleteSongResponseDto("You deleted song with id: " + id, HttpStatus.OK);
@@ -27,17 +31,20 @@ public class SongMapper {
     public static UpdateSongResponseDto mapFromSongToUpdateSongResponseDto(SongEntity newsong) {
         return new UpdateSongResponseDto(newsong.getName(), newsong.getArtist());
     }
-    public static PartiallyUpdateSongResponseDto mapFromSongToPartiallyUpdateSongResponseDto(SongEntity updateSong) {
-        return new PartiallyUpdateSongResponseDto(updateSong);
+    public static PartiallyUpdateSongResponseDto mapFromSongToPartiallyUpdateSongResponseDto(SongEntity song) {
+        SongDto songDto = SongMapper.mapFromSongToSongDto(song);
+        return new PartiallyUpdateSongResponseDto(songDto);
     }
     public static GetSongResponseDto mapFromSongToGetSongResponseDto(SongEntity song) {
-        return new GetSongResponseDto(song);
+        SongDto songDto = SongMapper.mapFromSongToSongDto(song);
+        return new GetSongResponseDto(songDto);
     }
     public static SongEntity mapFromPartiallyUpdateSongRequestDtoToSong(PartiallyUpdateSongRequestDto dto){
         return new SongEntity(dto.songName(), dto.artist());
     }
-    public static GetAllSongsResponseDto mapFromSongToGetAllSongsResponseDto(List<SongEntity> database){
-        return new GetAllSongsResponseDto(database);
+    public static GetAllSongsResponseDto mapFromSongToGetAllSongsResponseDto(List<SongEntity> songs){
+        List<SongDto> songDtos = songs.stream().map(SongMapper::mapFromSongToSongDto).toList();
+        return new GetAllSongsResponseDto(songDtos);
     }
     public static SongEntity mapFromUpdateSongRequestDtoToSong(UpdateSongRequestDto dto){
         return new SongEntity(dto.songName(), dto.artist());
