@@ -5,6 +5,7 @@ import lombok.*;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.time.Instant;
+import java.util.Objects;
 
 @Builder
 @Entity
@@ -13,7 +14,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "song")
-public class SongEntity {
+public class SongEntity extends BaseEntity{
 
     @Id
     @GeneratedValue(generator = "song_id_seq", strategy = GenerationType.SEQUENCE)
@@ -42,4 +43,6 @@ public class SongEntity {
         this.name = name;
         this.artist = artist;
     }
+
+
 }
