@@ -1,0 +1,72 @@
+package com.songify.domain.crud;
+
+import com.songify.domain.crud.dto.SongDto;
+import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+@AllArgsConstructor(access = lombok.AccessLevel.PACKAGE)
+public class SongCrudeFacade {
+
+    private final SongAdder songAdder;
+    private final SongRetriever songRetriever;
+    private final SongDeleter songDeleter;
+    private final SongUpdater songUpdater;
+
+    public List<SongDto> findAll(final Pageable pageable) {
+        return songRetriever.findAll(pageable).stream().map(song ->SongDto.builder()
+                .id(song.getId())
+                .name(song.getName())
+                .build())
+                .collect(Collectors.toList());
+    }
+
+    public void updateById(Long id, SongDto newSongDto){
+        songRetriever.existById(id);
+        Song songValidatedAndReadyToUpdate = new Song(newSongDto.name());
+        songUpdater.updateById(id, songValidatedAndReadyToUpdate);
+    }
+    public SongDto updatePartiallyById(Long id, SongDto songFromRequest){
+        songRetriever.existById(id);
+        Song songFromDatabase = songRetriever.findSongByDtoId(id);
+        Song toSave = new Song();
+        if(songFromRequest.name() != null){
+            toSave.setName(songFromRequest.name());
+        }else {
+            toSave.setName(songFromDatabase.getName());
+        }
+        songUpdater.updateById(id, toSave);
+        return SongDto.builder()
+                .id(toSave.getId())
+                .name(toSave.getName())
+                .build();
+    }
+
+    public SongDto addSong(final SongDto songDto){
+        String name = songDto.name();
+        Song vaidatedAndReadyToSaveSong = new Song(name);
+        Song addedSong = songAdder.addSong(vaidatedAndReadyToSaveSong);
+        return SongDto.builder()
+                .id(addedSong.getId())
+                .name(addedSong.getName())
+                .build();
+    }
+
+    public void deleteById(Long id){
+        songRetriever.existById(id);
+        songDeleter.deleteById(id);
+    }
+
+    public SongDto findSongDtoById(Long id){
+        Song song = songRetriever.findSongByDtoId(id);
+        return SongDto.builder()
+                .id(song.getId())
+                .name(song.getName())
+                .build();
+    }
+
+}
