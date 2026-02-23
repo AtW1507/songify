@@ -1,5 +1,7 @@
 package com.songify.domain.crud;
 
+import com.songify.domain.crud.dto.ArtistDto;
+import com.songify.domain.crud.dto.ArtistRequestDto;
 import com.songify.domain.crud.dto.SongDto;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -10,14 +12,19 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor(access = lombok.AccessLevel.PACKAGE)
-public class SongCrudeFacade {
+public class SongifyCrudFacade {
 
     private final SongAdder songAdder;
     private final SongRetriever songRetriever;
     private final SongDeleter songDeleter;
     private final SongUpdater songUpdater;
+    private final ArtistAdder artistAdder;
 
-    public List<SongDto> findAll(final Pageable pageable) {
+    public ArtistDto addArtist(ArtistRequestDto dto){
+        return artistAdder.addArtist(dto.name());
+
+    }
+    public List<SongDto> findAll(Pageable pageable) {
         return songRetriever.findAll(pageable).stream().map(song ->SongDto.builder()
                 .id(song.getId())
                 .name(song.getName())

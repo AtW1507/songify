@@ -30,11 +30,6 @@ class SongUpdater {
         } else {
             builder.name(songFromDataBase.getName());
         }
-        if (songFromRequest.getArtist() != null) {
-            builder.artist(songFromRequest.getArtist());
-        } else {
-            builder.artist(songFromDataBase.getArtist());
-        }
         Song toSave = builder.build();
         updateById(id, toSave);
         return toSave;
