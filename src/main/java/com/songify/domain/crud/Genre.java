@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,5 +28,9 @@ class Genre extends BaseEntity {
     private Long id;
 
     private String name;
+
+    public Genre(String name) {
+        this.name = name;
+    }
 
 }

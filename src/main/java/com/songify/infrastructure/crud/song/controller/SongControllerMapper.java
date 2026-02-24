@@ -46,6 +46,7 @@ public class SongControllerMapper {
 
     static CreateSongResponseDto mapFromSongToCreateSongResponseDto(SongDto songDto) {
         return new CreateSongResponseDto(SongDtoForJson.builder()
+                .id(songDto.id())
                 .name(songDto.name()).build());
     }
 

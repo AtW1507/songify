@@ -23,7 +23,7 @@ class SongUpdater {
     }
 
     Song updatePartiallyById(Long id, Song songFromRequest) {
-        Song songFromDataBase = songRetriever.findSongByDtoId(id);
+        Song songFromDataBase = songRetriever.findSongById(id);
         Song.SongBuilder builder = Song.builder();
         if (songFromRequest.getName() != null) {
             builder.name(songFromRequest.getName());
