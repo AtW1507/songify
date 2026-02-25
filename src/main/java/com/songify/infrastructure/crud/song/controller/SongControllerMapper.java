@@ -59,11 +59,11 @@ public class SongControllerMapper {
     }
 
     static PartiallyUpdateSongResponseDto mapFromSongDtoToPartiallyUpdateSongResponseDto(SongDto songDto) {
-        return new PartiallyUpdateSongResponseDto(SongDtoForJson.builder().name(songDto.name()).build());
+        return new PartiallyUpdateSongResponseDto(SongDtoForJson.builder().id(songDto.id()).name(songDto.name()).build());
     }
 
     static GetSongResponseDto mapFromSongToGetSongResponseDto(SongDto songDto) {
-        return new GetSongResponseDto(SongDtoForJson.builder().name(songDto.name()).build());
+        return new GetSongResponseDto(SongDtoForJson.builder().id(songDto.id()).name(songDto.name()).build());
     }
 
     static GetAllSongsResponseDto mapFromSongToGetAllSongsResponseDto(List<SongDto> songs) {

@@ -8,5 +8,6 @@ enum SongLanguage {
     GERMAN,
     ITALIAN,
     JAPANESE,
+    SWEDISH,
     OTHER
 }
