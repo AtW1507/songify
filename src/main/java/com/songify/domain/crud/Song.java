@@ -31,7 +31,7 @@ class Song extends BaseEntity {
 
     private Long duration;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Genre genre;
 
     @Enumerated(EnumType.STRING)

@@ -68,9 +68,10 @@ public class SongControllerMapper {
 
     static GetAllSongsResponseDto mapFromSongToGetAllSongsResponseDto(List<SongDto> songs) {
         return new GetAllSongsResponseDto(songs.stream().map(song -> SongDtoForJson.builder()
-                .id(song.id())
-                .name(song.name())
-                .build())
+                        .id(song.id())
+                        .name(song.name())
+                        .genre(song.genre())
+                        .build())
                 .toList()
         );
     }
