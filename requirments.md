@@ -8,7 +8,7 @@ SONGIFY: APLIKACJA O ZARZĄZDANIA ALBUMAMI, ASRTYSTAMI I PIOSENKAMI
 6. można usunąć artystę (usuwamy wtedy jego piosenki oraz albumy, ale jesli było więcej niż jeden artysta w albumie, to usuwamy tylko artystę z albumu i samego artystę) 
 7. można usunąć gatunek muzyczny (ale nie może istnieć piosenka z takim gatunkiem) 
 8. można usunąć album (ale dopiero wtedy kiedy nie ma już żadnej piosenki przypisanej do albumu)
-9. można usunąć piosenkę, ale nie usuwamy albumu i artystów gdy była tylko 1 piosenka w albumie 
+9. ~~można usunąć piosenkę, ale nie usuwamy albumu i artystów gdy była tylko 1 piosenka w albumie~~ 
 10. można edytować nazwę artysty 10. można edytować nazwę gatunku muzycznego 
 11. można edytować album (dodawać piosenki, arytstów, zmieniac nazwe albumu)
 12. można edytować piosenkę (czas trwania, artystę, nazwę piosenki)

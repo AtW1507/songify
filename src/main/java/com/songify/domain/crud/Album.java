@@ -24,7 +24,7 @@ import java.util.Set;
 @Setter(AccessLevel.PACKAGE)
 class Album extends BaseEntity {
     @Id
-    @GeneratedValue(generator = "album_id_seq" , strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(generator = "album_id_seq", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(
             name = "album_id_seq",
             sequenceName = "album_id_seq",
@@ -45,6 +45,12 @@ class Album extends BaseEntity {
 
     void addSongToAlbum(final Song song) {
         songs.add(song);
+
+    }
+
+    void removeArtist(Artist artist) {
+        artists.remove(artist);
+        artist.removeAlbum(this);
 
     }
 }
