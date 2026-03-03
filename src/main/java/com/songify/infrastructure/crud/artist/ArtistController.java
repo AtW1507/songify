@@ -3,6 +3,7 @@ package com.songify.infrastructure.crud.artist;
 import com.songify.domain.crud.SongifyCrudFacade;
 import com.songify.domain.crud.dto.ArtistDto;
 import com.songify.domain.crud.dto.ArtistRequestDto;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.data.domain.Pageable;
@@ -10,6 +11,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -47,5 +49,10 @@ class ArtistController {
     ResponseEntity<String> addArtistToAlbum(@PathVariable Long artistId, @PathVariable Long albumId){
         songifyCrudFacade.addArtistToAlbum(artistId, albumId);
         return ResponseEntity.ok("Probably assigned artist to album");
+    }
+    @PatchMapping("/{artistId}")
+    ResponseEntity<ArtistDto> updateArtistNameById(@PathVariable Long artistId, @Valid @RequestBody ArtistUpdateRequestDto artistUpdateRequestDto){
+        ArtistDto artistDto = songifyCrudFacade.updateArtistNameById(artistId, artistUpdateRequestDto.newArtistName());
+        return ResponseEntity.ok(artistDto);
     }
 }
