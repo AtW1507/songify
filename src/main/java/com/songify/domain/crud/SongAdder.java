@@ -22,7 +22,7 @@ class SongAdder {
         this.songRepository = songRepository;
     }
 
-    SongDto addSong(SongRequestDto songDto) {
+    SongDto addSong(final SongRequestDto songDto) {
         SongLanguageDto language = songDto.language();
         SongLanguage songLanguage = SongLanguage.valueOf(language.name());
         Song song = new Song(songDto.name(), songDto.releaseDate(), songDto.duration(), songLanguage);
@@ -31,6 +31,16 @@ class SongAdder {
         log.info("After savie -ID: " + save.getId());
 
         return new SongDto(save.getId(), save.getName(), new GenreDto(save.getGenre().getId(), save.getGenre().getName()));
+    }
+    Song addSongAndGetEntity(final SongRequestDto songDto) {
+        SongLanguageDto language = songDto.language();
+        SongLanguage songLanguage = SongLanguage.valueOf(language.name());
+        Song song = new Song(songDto.name(), songDto.releaseDate(), songDto.duration(), songLanguage);
+        log.info("Song added: " + song);
+
+        return songRepository.save(song);
+
+
     }
 
 

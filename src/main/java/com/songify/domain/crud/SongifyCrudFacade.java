@@ -1,6 +1,5 @@
 package com.songify.domain.crud;
 
-import com.songify.domain.crud.dto.AlbumDtoWithArtistsAndSongs;
 import com.songify.domain.crud.dto.AlbumInfo;
 import com.songify.domain.crud.dto.AlbumRequestDto;
 import com.songify.domain.crud.dto.ArtistDto;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor(access = lombok.AccessLevel.PACKAGE)
@@ -54,6 +52,10 @@ public class SongifyCrudFacade {
     public SongDto addSong(SongRequestDto dto) {
         return songAdder.addSong(dto);
 
+    }
+
+    public ArtistDto addArtistWithDefaultAlbumAndSong(ArtistRequestDto dto){
+        return artistAdder.addArtistWithDefaultAlbumAndSong(dto);
     }
 
     public void addArtistToAlbum(Long artistId, Long albumId){
