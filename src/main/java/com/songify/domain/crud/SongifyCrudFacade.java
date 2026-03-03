@@ -33,6 +33,7 @@ public class SongifyCrudFacade {
     private final ArtistRetriever artistRetriever;
     private final AlbumRetriever albumRetriever;
     private final ArtistDeleter artistDeleter;
+    private final ArtistAssigner artistAssigner;
 
     public ArtistDto addArtist(ArtistRequestDto dto) {
         return artistAdder.addArtist(dto.name());
@@ -52,6 +53,10 @@ public class SongifyCrudFacade {
     public SongDto addSong(SongRequestDto dto) {
         return songAdder.addSong(dto);
 
+    }
+
+    public void addArtistToAlbum(Long artistId, Long albumId){
+        artistAssigner.addArtistToAlbum(artistId, albumId);
     }
 
     public Set<ArtistDto> findAllArtists(Pageable pageable) {
