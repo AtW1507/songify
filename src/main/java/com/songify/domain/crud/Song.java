@@ -12,7 +12,11 @@ import java.time.Instant;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "song")
+@Table(name = "song",
+        indexes = {@Index(
+                name = "idx_song_name",
+                columnList = "name")}
+)
 class Song extends BaseEntity {
 
     @Id
