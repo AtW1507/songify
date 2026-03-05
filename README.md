@@ -210,31 +210,126 @@ Using `@Valid` for request validation in controllers
 
 ## Project Structure
 
+## Project Structure
+
 ```
 songify/
 ├── src/
 │   ├── main/
 │   │   ├── java/com/songify/
-│   │   │   ├── domain/crud/              # Domain layer
-│   │   │   │   ├── entities (Song, Artist, Album, Genre)
-│   │   │   │   ├── repositories
-│   │   │   │   ├── services (Adder, Retriever, Updater, Deleter)
-│   │   │   │   └── SongifyCrudFacade.java
-│   │   │   └── infrastructure/           # Infrastructure layer
-│   │   │       ├── crud/
-│   │   │       │   ├── song/controller
-│   │   │       │   ├── artist
-│   │   │       │   ├── album
-│   │   │       │   └── genre
-│   │   │       └── apiValidation
+│   │   │   ├── SongifyApplication.java
+│   │   │   ├── domain/
+│   │   │   │   └── crud/
+│   │   │   │       ├── Song.java
+│   │   │   │       ├── Artist.java
+│   │   │   │       ├── Album.java
+│   │   │   │       ├── Genre.java
+│   │   │   │       ├── SongLanguage.java
+│   │   │   │       ├── SongRepository.java
+│   │   │   │       ├── ArtistRepository.java
+│   │   │   │       ├── AlbumRepository.java
+│   │   │   │       ├── GenreRepository.java
+│   │   │   │       ├── SongifyCrudFacade.java
+│   │   │   │       ├── SongAdder.java
+│   │   │   │       ├── SongRetriever.java
+│   │   │   │       ├── SongUpdater.java
+│   │   │   │       ├── SongDeleter.java
+│   │   │   │       ├── ArtistAdder.java
+│   │   │   │       ├── ArtistRetriever.java
+│   │   │   │       ├── ArtistUpdater.java
+│   │   │   │       ├── ArtistDeleter.java
+│   │   │   │       ├── ArtistAssigner.java
+│   │   │   │       ├── AlbumAdder.java
+│   │   │   │       ├── AlbumRetriever.java
+│   │   │   │       ├── AlbumDeleter.java
+│   │   │   │       ├── GenreAdder.java
+│   │   │   │       ├── GenreDeleter.java
+│   │   │   │       ├── SongNotFoundException.java
+│   │   │   │       ├── ArtistNotFoundException.java
+│   │   │   │       ├── AlbumNotFoundException.java
+│   │   │   │       ├── GenreWasNotDeletedException.java
+│   │   │   │       ├── dto/
+│   │   │   │       │   ├── SongDto.java
+│   │   │   │       │   ├── SongRequestDto.java
+│   │   │   │       │   ├── SongLanguageDto.java
+│   │   │   │       │   ├── ArtistDto.java
+│   │   │   │       │   ├── ArtistRequestDto.java
+│   │   │   │       │   ├── AlbumDto.java
+│   │   │   │       │   ├── AlbumRequestDto.java
+│   │   │   │       │   ├── AlbumInfo.java
+│   │   │   │       │   ├── AlbumDtoWithArtistsAndSongs.java
+│   │   │   │       │   ├── GenreDto.java
+│   │   │   │       │   └── GenreRequestDto.java
+│   │   │   │       └── util/
+│   │   │   │           └── BaseEntity.java
+│   │   │   └── infrastructure/
+│   │   │       ├── apiValidation/
+│   │   │       │   └── apiValidation/
+│   │   │       │       ├── ApiValidationErrorHandler.java
+│   │   │       │       └── ApiValidationErrorResponseDto.java
+│   │   │       └── crud/
+│   │   │           ├── song/
+│   │   │           │   └── controller/
+│   │   │           │       ├── SongRestController.java
+│   │   │           │       ├── SongViewController.java
+│   │   │           │       ├── SongControllerMapper.java
+│   │   │           │       ├── dto/
+│   │   │           │       │   ├── SongDtoForJson.java
+│   │   │           │       │   ├── request/
+│   │   │           │       │   │   ├── CreateSongRequestDto.java
+│   │   │           │       │   │   ├── UpdateSongRequestDto.java
+│   │   │           │       │   │   └── PartiallyUpdateSongRequestDto.java
+│   │   │           │       │   └── response/
+│   │   │           │       │       ├── CreateSongResponseDto.java
+│   │   │           │       │       ├── GetSongResponseDto.java
+│   │   │           │       │       ├── GetAllSongsResponseDto.java
+│   │   │           │       │       ├── UpdateSongResponseDto.java
+│   │   │           │       │       ├── PartiallyUpdateSongResponseDto.java
+│   │   │           │       │       ├── DeleteSongResponseDto.java
+│   │   │           │       │       └── SongControllerResponseDto.java
+│   │   │           │       └── error/
+│   │   │           │           ├── SongErrorHandler.java
+│   │   │           │           └── ErrorSongResponseDTO.java
+│   │   │           ├── artist/
+│   │   │           │   ├── ArtistController.java
+│   │   │           │   ├── ArtistUpdateRequestDto.java
+│   │   │           │   └── AllArtistDto.java
+│   │   │            album/
+│   │   │           │   └── AlbumController.java
+│   │   │           └── genre/
+│   │   │               └── GenreController.java
 │   │   └── resources/
-│   │       ├── db.migration/            # Flyway migrations
-│   │       ├── templates/               # HTML templates
-│   │       ├── static/                  # Static files
+│   │       ├── db.migration/
+│   │       │   ├── V1__crreate_song_table.sql
+│   │       │   ├── V2__added_uuid.sql
+│   │       │   ├── V3__added_timeStamp_for_song.sql
+│   │       │   ├── V4__create_table_genre.sql
+│   │       │   ├── V5__create_table_album.sql
+│   │       │   ├── V6__create_table_artist.sql
+│   │       │   ├── V7__added_uuid_and_created_to_album_artist_genre.sql
+│   │       │   ├── V8__relation_one_to_one_between_song_and_genre.sql
+│   │       │   ├── V9__adding_foreign_key_album_id_to_song.sql
+│   │       │   ├── V10__create_join_table_for_many_to_many_artist_albums.sql
+│   │       │   ├── V11__insert_albums.sql
+│   │       │   ├── V12__insert_artists.sql
+│   │       │   ├── V13__insert_artists_albums.sql
+│   │       │   ├── V14__insert_genres.sql
+│   │       │   ├── V15__insert_songs.sql
+│   │       │   ├── V16__added_optimistinc_locking_using_version_column.sql
+│   │       │   └── V17__create_index_for_song_name.sql
+│   │       ├── templates/
+│   │       │   └── songs.html
+│   │       ├── static/
+│   │       │   └── home.html
 │   │       └── application.properties
 │   └── test/
+│       └── java/com/songify/
+│           └── SongifyApplicationTests.java
+├── db/
+│   └── init.sql
 ├── docker-compose.yml
 ├── pom.xml
+├── requirments.md
 └── README.md
 ```
 
