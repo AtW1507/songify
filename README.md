@@ -269,10 +269,6 @@ PUT /artists/1/2
 GET /albums/1
 ```
 
-## Author
-
-Educational project as part of Udemy course
-
 ## License
 
 Educational project
