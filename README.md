@@ -211,6 +211,8 @@ Using `@Valid` for request validation in controllers
 
 ## Project Structure
 
+## Project Structure
+
 ```
 songify/
 ├── src/
