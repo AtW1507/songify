@@ -28,8 +28,6 @@ class SongAdder {
         Song song = new Song(songDto.name(), songDto.releaseDate(), songDto.duration(), songLanguage);
         log.info("Song added: " + song);
         Song save = songRepository.save(song);
-        log.info("After savie -ID: " + save.getId());
-
         return new SongDto(save.getId(), save.getName(), new GenreDto(save.getGenre().getId(), save.getGenre().getName()));
     }
     Song addSongAndGetEntity(final SongRequestDto songDto) {

@@ -7,13 +7,12 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 class ArtistAssigner {
 
-    private final ArtistRepository artistRepository;
+    private final ArtistRetriever artistRetriever;
     private final AlbumRetriever albumRetriever;
 
 
     void addArtistToAlbum(final Long artistId, final Long albumId) {
-        Artist artist = artistRepository.findById(artistId)
-                .orElseThrow(() -> new ArtistNotFoundException(artistId.toString()));
+        Artist artist = artistRetriever.findById(artistId);
         Album album = albumRetriever.findById(albumId);
         artist.addAlbum(album);
     }

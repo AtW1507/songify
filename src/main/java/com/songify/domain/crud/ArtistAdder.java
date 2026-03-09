@@ -20,6 +20,7 @@ class ArtistAdder {
     private final AlbumAdder albumAdder;
     private final SongAdder songAdder;
 
+
     ArtistDto addArtist(String name) {
         Artist artist = new Artist(name);
         Artist save = artistRepository.save(artist);

@@ -21,16 +21,11 @@ class ArtistDeleter {
     void deleteArtistByIdWithAlbumsAndSongs(Long artistId) {
         Artist artist = artistRetriever.findById(artistId);
         Set<Album> artistAlbums = albumRetriever.findAlbumsByArtistId(artist.getId());
-
-
         if (artistAlbums.isEmpty()) {
             log.info("Artist with id " + artistId + "have 0 albums");
             artistRepository.deleteById(artistId);
             return;
         }
-        artistAlbums.stream()
-                .filter(album -> album.getArtists().size() >= 2)
-                .forEach(album -> album.removeArtist(artist));
 
         Set<Album> albumsWithOnlyOneArtist = artistAlbums.stream()
                 .filter(album -> album.getArtists().size() == 1)
@@ -50,8 +45,16 @@ class ArtistDeleter {
                 .collect(Collectors.toSet());
 
         albumDeleter.deleteAllAlbumsByIds(albumsIdsToDelete);
+
+        artistAlbums.stream()
+                .filter(album -> album.getArtists().size() >= 2)
+                .forEach(album -> album.removeArtist(artist));
+
+
         artistRepository.deleteById(artistId);
 
 
     }
+
+
 }

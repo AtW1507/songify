@@ -22,19 +22,19 @@ class SongUpdater {
 
     }
 
-    Song updatePartiallyById(Long id, Song songFromRequest) {
-        Song songFromDataBase = songRetriever.findSongById(id);
-        Song.SongBuilder builder = Song.builder();
-        if (songFromRequest.getName() != null) {
-            builder.name(songFromRequest.getName());
-        } else {
-            builder.name(songFromDataBase.getName());
-        }
-        Song toSave = builder.build();
-        updateById(id, toSave);
-        return toSave;
-
-    }
+//    Song updatePartiallyById(Long id, Song songFromRequest) {
+//        Song songFromDataBase = songRetriever.findSongById(id);
+//        Song.SongBuilder builder = Song.builder();
+//        if (songFromRequest.getName() != null) {
+//            builder.name(songFromRequest.getName());
+//        } else {
+//            builder.name(songFromDataBase.getName());
+//        }
+//        Song toSave = builder.build();
+//        updateById(id, toSave);
+//        return toSave;
+//
+//    }
 
 
 }
