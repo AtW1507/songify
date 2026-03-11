@@ -209,7 +209,7 @@ Using `@Valid` for request validation in controllers
 - Custom exceptions: `SongNotFoundException`, `ArtistNotFoundException`, `AlbumNotFoundException`
 
 
-## Project Structure
+
 
 ## Project Structure
 
