@@ -1,4 +1,8 @@
 package com.songify.domain.crud;
 
-public record AlbumDto(Long id, String name) {
+import lombok.Builder;
+
+import java.util.Set;
+@Builder
+public record AlbumDto(Long id, String name, Set<Long> songIds) {
 }

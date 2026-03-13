@@ -1,0 +1,7 @@
+package com.songify.infrastructure.crud.album;
+
+import com.songify.domain.crud.AlbumDto;
+import java.util.Set;
+
+public record GetAllAlbumsResponseDto(Set<AlbumDto> albums) {
+}

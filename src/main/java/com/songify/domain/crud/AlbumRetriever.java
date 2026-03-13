@@ -33,17 +33,21 @@ class AlbumRetriever {
     }
 
     Set<AlbumDto> findAlbumsDtoByArtistId(final Long artistId) {
-        return findAlbumsByArtistId(artistId).stream().map(album -> new AlbumDto(album.getId(), album.getTitle())).collect(Collectors.toSet());
+        return findAlbumsByArtistId(artistId).stream()
+                .map(album -> new AlbumDto(album.getId(), album.getTitle(), album.getSongsIds()))
+                .collect(Collectors.toSet());
     }
 
     Album findById(Long albumId) {
         return albumRepository.findById(albumId).orElseThrow(() -> new AlbumNotFoundException("Album with id " + albumId + " not found"));
     }
+
     AlbumDto findDtoById(Long albumId) {
         Album album = findById(albumId);
         return new AlbumDto(
                 album.getId(),
-                album.getTitle()
+                album.getTitle(),
+                album.getSongsIds()
         );
 
     }
@@ -51,7 +55,7 @@ class AlbumRetriever {
     Set<AlbumDto> findAll() {
         return albumRepository.findAll()
                 .stream()
-                .map(album -> new AlbumDto(album.getId(),album.getTitle()))
+                .map(album -> new AlbumDto(album.getId(), album.getTitle(), album.getSongsIds()))
                 .collect(Collectors.toSet());
     }
 }

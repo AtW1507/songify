@@ -4,6 +4,8 @@ import com.songify.domain.crud.dto.AlbumInfo;
 import com.songify.domain.crud.dto.AlbumRequestDto;
 import com.songify.domain.crud.dto.ArtistDto;
 import com.songify.domain.crud.dto.ArtistRequestDto;
+import com.songify.domain.crud.dto.GenreDto;
+import com.songify.domain.crud.dto.GenreRequestDto;
 import com.songify.domain.crud.dto.SongDto;
 import com.songify.domain.crud.dto.SongLanguageDto;
 import com.songify.domain.crud.dto.SongRequestDto;
@@ -14,6 +16,8 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Set;
 
+import static java.util.Collections.emptySet;
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -166,6 +170,7 @@ class SongifyCrudFacadeTest {
     }
 
     @Test
+    @DisplayName("should add artist to album")
     public void should_add_artist_to_album() {
         //given
         ArtistRequestDto artist = ArtistRequestDto.builder()
@@ -181,13 +186,16 @@ class SongifyCrudFacadeTest {
                 .songIds(Set.of(songDto.id()))
                 .build();
         assertThat(songifyCrudFacade.finAllAlbums()).isEmpty();
-        //when
         ArtistDto artistDto = songifyCrudFacade.addArtist(artist);
         AlbumDto albumDto = songifyCrudFacade.addAlbumWithSong(album);
+        //when
         songifyCrudFacade.addArtistToAlbum(artistDto.id(), albumDto.id());
         //then
-        assertThat(songifyCrudFacade.finAllAlbums()).isNotEmpty();
-        assertThat(songifyCrudFacade.findAlbumsByArtistId(artistDto.id())).isNotEmpty();
+        Set<AlbumDto> albumsByArtistId = songifyCrudFacade.findAlbumsByArtistId(artistDto.id());
+        assertThat(albumsByArtistId).isNotEmpty();
+        assertThat(albumsByArtistId)
+                .extracting(AlbumDto::id)
+                .containsExactly(albumDto.id());
     }
 
     @Test
@@ -198,15 +206,15 @@ class SongifyCrudFacadeTest {
                 .language(SongLanguageDto.ENGLISH)
                 .build();
         SongDto songDto = songifyCrudFacade.addSong(song);
-        AlbumRequestDto album = AlbumRequestDto.builder()
-                .title("album 1")
+        AlbumDto album = songifyCrudFacade.addAlbumWithSong(AlbumRequestDto.builder()
                 .songIds(Set.of(songDto.id()))
-                .build();
-        AlbumDto albumDto = songifyCrudFacade.addAlbumWithSong(album);
+                .title("album 1")
+                .build());
+        Long albumId = album.id();
         //when
-        AlbumDto albumById = songifyCrudFacade.findAlbumById(albumDto.id());
+        AlbumDto albumById = songifyCrudFacade.findAlbumById(albumId);
         //then
-        assertThat(albumById).isEqualTo(albumDto);
+        assertThat(albumById).isEqualTo(new AlbumDto(albumId, "album 1", Set.of(songDto.id())));
     }
 
     @Test
@@ -329,5 +337,56 @@ class SongifyCrudFacadeTest {
         assertThat(songifyCrudFacade.finAllAlbums()).isEmpty();
         assertThat(songifyCrudFacade.findAllSongs(Pageable.unpaged())).isEmpty();
         assertThat(songifyCrudFacade.findAlbumsByArtistId(shawnMendesId)).isEmpty();
+    }
+
+    @Test
+    @DisplayName("should retrieve song with genre")
+    public void should_retrieve_song() {
+        // given
+        SongRequestDto song = SongRequestDto.builder()
+                .name("song")
+                .language(SongLanguageDto.ENGLISH)
+                .build();
+        songifyCrudFacade.addSong(song);
+        // when
+        SongDto songDto = songifyCrudFacade.findSongDtoById(0L);
+        // then
+        assertThat(songDto.name()).isEqualTo("song");
+        assertThat(songDto.id()).isEqualTo(0L);
+        assertThat(songDto.genre().name()).isEqualTo("default");
+        assertThat(songDto.genre().id()).isEqualTo(1L);
+
+
+    }
+
+    @Test
+    @DisplayName("should_add_genre")
+    public void should_add_genre() {
+         //given
+
+        //when
+        GenreDto genreDto = songifyCrudFacade.addGenre(new GenreRequestDto("Rock"));
+        //then
+        assertThat(genreDto.name()).isEqualTo("Rock");
+        assertThat(genreDto.id()).isEqualTo(2L);
+
+
+
+    }
+
+    @Test
+    @DisplayName("should return all genres")
+    public void should_return_all_genres() {
+        // we have "default" genre in db.
+        //given
+        GenreDto genre1 = songifyCrudFacade.addGenre(new GenreRequestDto("Rock"));
+        GenreDto genre2 = songifyCrudFacade.addGenre(new GenreRequestDto("Pop"));
+        //when
+        Set<GenreDto> allGenres = songifyCrudFacade.retrieveGenres();
+        //then
+        assertThat(allGenres.size()).isEqualTo(3);
+        assertThat(allGenres.stream().map(GenreDto::name)).containsExactlyInAnyOrder("default", "Rock", "Pop");
+
+
     }
 }

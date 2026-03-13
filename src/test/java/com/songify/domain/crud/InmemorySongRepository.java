@@ -19,7 +19,6 @@ class InmemorySongRepository implements SongRepository {
         long index = this.integer.getAndIncrement();
         db.put(index, song);
         song.setId(index);
-        song.setGenre(new Genre(1L, "Default"));
         return song;
     }
 

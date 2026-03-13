@@ -47,7 +47,9 @@ public class SongControllerMapper {
     static CreateSongResponseDto mapFromSongToCreateSongResponseDto(SongDto songDto) {
         return new CreateSongResponseDto(SongDtoForJson.builder()
                 .id(songDto.id())
-                .name(songDto.name()).build());
+                .name(songDto.name())
+                .genre(songDto.genre())
+                .build());
     }
 
     static DeleteSongResponseDto mapFromSongToDeleteSongResponseDto(Long id) {
@@ -59,11 +61,15 @@ public class SongControllerMapper {
     }
 
     static PartiallyUpdateSongResponseDto mapFromSongDtoToPartiallyUpdateSongResponseDto(SongDto songDto) {
-        return new PartiallyUpdateSongResponseDto(SongDtoForJson.builder().id(songDto.id()).name(songDto.name()).build());
+        return new PartiallyUpdateSongResponseDto(SongDtoForJson.builder().id(songDto.id()).name(songDto.name()).genre(songDto.genre()).build());
     }
 
     static GetSongResponseDto mapFromSongToGetSongResponseDto(SongDto songDto) {
-        return new GetSongResponseDto(SongDtoForJson.builder().id(songDto.id()).name(songDto.name()).build());
+        return new GetSongResponseDto(SongDtoForJson.builder()
+                .id(songDto.id())
+                .name(songDto.name())
+                .genre(songDto.genre())
+                .build());
     }
 
     static GetAllSongsResponseDto mapFromSongToGetAllSongsResponseDto(List<SongDto> songs) {
