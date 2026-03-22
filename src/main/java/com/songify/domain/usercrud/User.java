@@ -21,7 +21,7 @@ import java.util.HashSet;
 @Getter
 @Setter
 @NoArgsConstructor
-class User extends BaseEntity {
+public class User extends BaseEntity {
 
     User(final String email, final boolean enabled, final String password, final Collection<String> authorities) {
         this.email = email;

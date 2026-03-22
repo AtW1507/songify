@@ -4,7 +4,7 @@ import org.springframework.data.repository.Repository;
 
 import java.util.Optional;
 
-public interface UsersRepository extends Repository<User, Long> {
+public interface UserRepository extends Repository<User, Long> {
 
     Optional<User> findFirstByEmail(String email);
 
