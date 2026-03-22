@@ -2,7 +2,6 @@ package com.songify.infrastructure.crud.album;
 
 import com.songify.domain.crud.AlbumDto;
 import com.songify.domain.crud.SongifyCrudFacade;
-import com.songify.domain.crud.dto.AlbumDtoWithArtistsAndSongs;
 import com.songify.domain.crud.dto.AlbumInfo;
 import com.songify.domain.crud.dto.AlbumRequestDto;
 import lombok.AllArgsConstructor;
@@ -10,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,5 +39,10 @@ class AlbumController {
         Set<AlbumDto> allAlbums = songifyCrudFacade.findAllAlbums();
         GetAllAlbumsResponseDto response = new GetAllAlbumsResponseDto(allAlbums);
         return ResponseEntity.ok(response);
+    }
+    @PutMapping("/{albumId}/songs/{songId}")
+    ResponseEntity<AlbumDto> putSongToAlbum(@PathVariable Long albumId, @PathVariable Long songId){
+        final AlbumDto albumDto = songifyCrudFacade.addSongToAlbum(albumId, songId);
+        return ResponseEntity.ok(albumDto);
     }
 }

@@ -27,18 +27,17 @@ SONGIFY: APLIKACJA O ZARZĄZDANIA ALBUMAMI, ASRTYSTAMI I PIOSENKAMI
 25. SECURITY: 
 26. Kazdy bez uwierzytelnienia (authentication) moze przegladac piosenki, albumy itp (gosc niezalogowany)
 27. Są 2 role: ROLE_USER i ROLE_ADMIN 
-28. Uzywanie bezstanowego tokena JWT (uzyskuje go po zalogowaniu) - wlasna implementacja authorization 
-29. Oauth2 google logowanie i token jwt 
-30. tylko admin moze przejrzec loginy i role uzytkownikow endpoint /users 
-31. zeby zostac uzytkownikiem trzeba sie zarejestrowac login/haslo - wlasna implementacja i GOOGLE 
-32. zapisujemy uzytkownika i admina do bazy danych (w przypadku wlasnej implementacji) - admin tworzony w migracji flyway 
-33. uzytkownik moze wyswietlac piosenki, ale nie moze zarzadzac (w przyszlosci uzytkownik moze miec swoj profil, a tam "ulubione piosenki") - ROLE_USER 
-34. tylko admin moze zmieniac stan aplikacji (usuwac, dodawac, edytowac piosenki/albumy itp)
-35. chcemy miec szyfrowanie HTTPS, certyfikat wygenerowany recznie openssl 
-36. chcemy miec obsługe CORS - zapytania z domeny frontendowej 
-37. chcemy zabezpiecznie CSRF bo bedzie frontend uzywany 
-38. jako bonus potwierdzenie e-maila po rejestracji 
-39. podstawy testy integracyjne
+28. Uzywanie bezstanowego tokena JWT (uzyskuje go po zalogowaniu) - wlasna implementacja authorization Oauth2 google logowanie i token jwt 
+29. tylko admin moze przejrzec loginy i role uzytkownikow endpoint /users 
+30. zeby zostac uzytkownikiem trzeba sie zarejestrowac login/haslo - wlasna implementacja i GOOGLE 
+31. zapisujemy uzytkownika i admina do bazy danych (w przypadku wlasnej implementacji) - admin tworzony w migracji flyway 
+32. uzytkownik moze wyswietlac piosenki, ale nie moze zarzadzac (w przyszlosci uzytkownik moze miec swoj profil, a tam "ulubione piosenki") - ROLE_USER 
+33. tylko admin moze zmieniac stan aplikacji (usuwac, dodawac, edytowac piosenki/albumy itp)
+34. chcemy miec szyfrowanie HTTPS, certyfikat wygenerowany recznie openssl 
+35. chcemy miec obsługe CORS - zapytania z domeny frontendowej 
+36. chcemy zabezpiecznie CSRF bo bedzie frontend uzywany 
+37. jako bonus potwierdzenie e-maila po rejestracji 
+38. podstawy testy integracyjne
 
 
 HAPPY PATH (user tworzy album "Eminema" z piosenkami "Til i collapse", "Lose Yourself", o gatunku Rap)
