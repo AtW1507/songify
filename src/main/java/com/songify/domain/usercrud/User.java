@@ -8,7 +8,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,7 +22,7 @@ import java.util.HashSet;
 @NoArgsConstructor
 public class User extends BaseEntity {
 
-    User(final String email, final boolean enabled, final String password, final Collection<String> authorities) {
+    public User(String email, boolean enabled, String password, Collection<String> authorities) {
         this.email = email;
         this.enabled = enabled;
         this.password = password;
