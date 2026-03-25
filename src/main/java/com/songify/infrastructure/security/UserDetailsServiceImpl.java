@@ -36,11 +36,11 @@ class UserDetailsServiceImpl implements UserDetailsManager {
             log.warn("not saved user - already exists");
             throw new RuntimeException("not saved user - already exists");
         }
-        String uncodedPassword = passwordEncoder.encode(user.getPassword());
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
         User createdUser = new User(
                 user.getUsername(),
-                false,
-                uncodedPassword,
+                true,
+                encodedPassword,
                 List.of(DEFAULT_USER_ROLE)
         );
         User savedUser = userRepository.save(createdUser);
